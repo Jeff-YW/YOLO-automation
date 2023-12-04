@@ -177,6 +177,7 @@ int main(int argc, char** argv) {
     }
 
     std::string image_path = argv[1];
+    std::string model_path = argv[2];
 
     // Load class list.
     vector<string> class_list;
@@ -218,7 +219,8 @@ int main(int argc, char** argv) {
 
     // Load model.
     Net net;
-    net = readNet("models/yolov5s.onnx");
+    net = readNet(model_path);
+//    net = readNet("models/yolov5s.onnx");
 
     vector<Mat> detections;
     detections = pre_process(frame, net);
@@ -245,7 +247,7 @@ int main(int argc, char** argv) {
 
 //    imshow("Output", img);
 //    waitKey(0);
-
+//
 //    // Wait for a key press indefinitely
 //    while (true) {
 //        int key = cv::waitKey(0); // 0 means wait indefinitely

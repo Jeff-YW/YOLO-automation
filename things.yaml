@@ -21,7 +21,7 @@ ci_task:
     #   path: "/path/to/model"
 
   runfiles:
-    python_path: "yolov5.py"
+    python_path: "run_YOLO_model.py"
     cplusplus_path: "cmake-build-debug/Med_TA.exe"
 
   report_name: "ci_report.txt"

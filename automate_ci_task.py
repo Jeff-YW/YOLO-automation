@@ -156,10 +156,10 @@ for idx, val_image_path in enumerate(val_image_paths):
     img_path = f'{os.path.join("coco", val_image_path)}'
 
     # call python opencv YOLO prediction
-    result_python_yolo = subprocess.run(['python', runfiles_config['python_path'], img_path],
+    result_python_yolo = subprocess.run(['python', runfiles_config['python_path'], img_path, model_path],
                                         stdout=subprocess.PIPE)
     # call C plusplus opencv YOLO prediction
-    result_c_yolo = subprocess.run([runfiles_config['cplusplus_path'], img_path], stdout=subprocess.PIPE)
+    result_c_yolo = subprocess.run([runfiles_config['cplusplus_path'], img_path, model_path], stdout=subprocess.PIPE)
 
     # decode the Json ostream from the sub-process calling
     json_python = json.loads(result_python_yolo.stdout.decode('utf-8'))

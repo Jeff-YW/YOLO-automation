@@ -77,7 +77,7 @@ Instructions for building the C++ files with CMake will be provided here.
 
 Simply run
 
-```Python
+```
 python automate_ci_task.py
 ```
 
@@ -85,7 +85,7 @@ python automate_ci_task.py
 
 Simply run
 
-```Python
+```
 python automate_cii_task.py
 ```
 
