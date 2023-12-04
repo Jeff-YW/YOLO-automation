@@ -1,0 +1,15 @@
+# IDE - JetBrains #
+###################
+.idea/
+
+/__pycache__
+
+/cmake-build-debug
+
+
+/result
+
+/coco
+
+__pycache__/
+*.pyc

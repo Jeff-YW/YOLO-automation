@@ -1,0 +1,54 @@
+#read parameters for ci and cii tasks
+
+img_source_file: "coco/val2017.txt"
+
+ann_path:  "coco/annotations/instances_val2017.json"
+
+ci_task:
+  save_path: "result/ci"
+
+  num_of_pic: 20
+  vis_pred: True
+  vis_gt: True
+  log_pred: True
+  log_gt: True
+  save_image: False
+  models:
+    - name: "YOLO5s"
+      path: "models/yolov5s.onnx"
+    # Add additional models as needed
+    # - name: "Model Name"
+    #   path: "/path/to/model"
+
+  runfiles:
+    python_path: "yolov5.py"
+    cplusplus_path: "cmake-build-debug/Med_TA.exe"
+
+  report_name: "ci_report.txt"
+
+cii_task:
+
+  save_path: "result/cii"
+
+  num_of_pic: 20
+  vis_pred: True
+  vis_gt: True
+  log_pred: True
+  log_gt: True
+  save_image: True
+  models:
+    - name: "YOLO5n"
+      path: "models/yolov5n.onnx"
+    - name: "YOLO5m"
+      path: "models/yolov5m.onnx"
+    # Add additional models as needed
+    # - name: "Model Name"
+    #   path: "/path/to/model"
+
+  runfiles:
+    path: "run_YOLO_model.py"
+
+  report_name: "cii_report.txt"
+
+
+
