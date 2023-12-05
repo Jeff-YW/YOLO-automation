@@ -4,6 +4,19 @@
 This repository contains tools and scripts for automating the comparison of different aspects of `YOLO` implementations and models. 
 It is designed to facilitate the evaluation of `C++` and `Python`` implementation equivalence and to compare the performance and inference time of different YOLO models.
 
+## Sample Run Result
+
+The original codes in python and cpp are tested and verified their perfomance consistency on the `sample.jpg`
+
+Python inference on `sample.jpg`
+
+![Image 1](./run_samples/Python-inference-example.jpg)
+
+Cpp inference on `sample.jpg` (inference time debatable since it is on debug mode with MinGW compiled openCV lib)
+![Image 2](./run_samples/C-plusplus-inference-exmaples.jpg)
+
+The original codes are then modifed to serve the purpose of automation.
+
 ## Getting Started
 
 Clone the repository and `cd` into the directory to begin:
