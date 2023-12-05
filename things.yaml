@@ -8,10 +8,12 @@ ci_task:
   save_path: "result/ci"
 
   num_of_pic: 20
-  vis_pred: True
-  vis_gt: True
-  log_pred: True
-  log_gt: True
+  vis_pred: False
+  vis_gt: False
+  log_pred: False
+  log_gt: False
+  terminal_pred: True
+  terminal_gt: True
   save_image: False
   models:
     - name: "YOLO5s"
@@ -22,7 +24,8 @@ ci_task:
 
   runfiles:
     python_path: "run_YOLO_model.py"
-    cplusplus_path: "cmake-build-release/Med_TA.exe"
+#    cplusplus_path: "cmake-build-release/Med_TA.exe"
+    cplusplus_path: "build/Med_TA.exe"
 
   report_name: "ci_report.txt"
 
@@ -31,11 +34,13 @@ cii_task:
   save_path: "result/cii"
 
   num_of_pic: 20
-  vis_pred: True
-  vis_gt: True
-  log_pred: True
-  log_gt: True
-  save_image: True
+  vis_pred: False
+  vis_gt: False
+  log_pred: False
+  log_gt: False
+  terminal_pred: True
+  terminal_gt: True
+  save_image: False
   models:
     - name: "YOLO5n"
       path: "models/yolov5n.onnx"

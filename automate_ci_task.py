@@ -3,7 +3,7 @@ import subprocess
 import json
 import yaml
 from utils.vis_utils import display_image_ci
-from utils.log_utils import record_gt, record_pred_ci
+from utils.log_utils import record_gt, record_pred_ci, print_gt, print_pred_ci
 from utils.gen_utils import extract_id, read_text_file
 from pycocotools.coco import COCO
 from pycocotools.cocoeval import COCOeval
@@ -47,12 +47,14 @@ def coco_result_evaluation_ci():
     cocoEval_py = COCOeval(coco, cocoDt_py, 'bbox')
 
     # cocoeval to test the model performance
+    print("Python Inference Summary\n")
     cocoEval_py.evaluate()
     cocoEval_py.accumulate()
     cocoEval_py.summarize()
     print(cocoEval_py.stats)
+    print(f"Average Inference Time (Python): {sum(efficiency_py)/len(efficiency_py)}\n")
 
-    ##################
+    ########################################################################
 
     # prediction object loaded CPP
     cocoDt_cpp = coco.loadRes(coco_json_py)
@@ -61,10 +63,12 @@ def coco_result_evaluation_ci():
     cocoEval_cpp = COCOeval(coco, cocoDt_cpp, 'bbox')
 
     # cocoeval to test the model performance
+    print("Cpp Inference Summary\n")
     cocoEval_cpp.evaluate()
     cocoEval_cpp.accumulate()
     cocoEval_cpp.summarize()
     print(cocoEval_cpp.stats)
+    print(f"Average Inference Time (Cpp): {sum(efficiency_cpp)/len(efficiency_cpp)}\n")
 
     # save to report
     if log_prediction_flag:
@@ -73,10 +77,12 @@ def coco_result_evaluation_ci():
             f.write("Stats:\n")
             f.write(format_stats(cocoEval_py.stats))  # Write the stats
             f.write("\n\n")  # Add a newline for separation between entries
+            f.write(f"Average Inference Time (Python): {sum(efficiency_py)/len(efficiency_py)}\n")
             f.write(f"On: Cpp\n")  # Write the model name
             f.write("Stats:\n")
             f.write(format_stats(cocoEval_cpp.stats))  # Write the stats
             f.write("\n\n")  # Add a newline for separation between entries
+            f.write(f"Average Inference Time (Cpp): {sum(efficiency_cpp)/len(efficiency_cpp)}\n")
 
 
 # get the current working dir
@@ -106,6 +112,8 @@ vis_gt_flag = ci_params['vis_gt']
 log_prediction_flag = ci_params['log_pred']
 log_gt_flag = ci_params['log_gt']
 save_img_flag = ci_params["save_image"]
+terminal_print_flag = ci_params["terminal_pred"]
+terminal_print_gt_flag = ci_params["terminal_gt"]
 
 # Models, Runfiles, and Save file paths can also be extracted similarly
 model_name = ci_params['models'][0]['name']
@@ -145,10 +153,10 @@ val_image_paths = read_text_file(val2017_text_path)  # load the paths to the pic
 coco_json_py = []
 coco_json_cpp = []
 filtered_annotations = []
+efficiency_py = []
+efficiency_cpp = []
 
 for idx, val_image_path in enumerate(val_image_paths):
-
-    # print(f"{val_image_path}")
 
     if idx >= nums_of_pics:
         break
@@ -169,9 +177,11 @@ for idx, val_image_path in enumerate(val_image_paths):
     json_python_pred = json_python[:-1]  # list
     # Extracting the inference time (assuming it is the last entry)
     json_python_inference_time = json_python[-1]
+    efficiency_py.append(float(json_python_inference_time["inference time"]))
 
     json_c_plusplus_pred = json_c_plusplus[:-1]
     json_c_plusplus_inference_time = json_c_plusplus[-1]
+    efficiency_cpp.append(float(json_c_plusplus_inference_time["inference time"]))
 
     ########### Extract GT INFO ################
     coco_image_id = int(extract_id(val_image_path))
@@ -186,7 +196,7 @@ for idx, val_image_path in enumerate(val_image_paths):
 
     filtered_annotations.extend(anns)
 
-    if create_vis_output_flag or log_gt_flag:
+    if create_vis_output_flag or log_gt_flag or terminal_print_flag:
 
         coco_gt_infos = []
 
@@ -206,6 +216,17 @@ for idx, val_image_path in enumerate(val_image_paths):
         display_image_ci(img_path, abs_save_path, json_python_pred, json_c_plusplus_pred, coco_gt_infos,
                          save_image=save_img_flag, display_gt=vis_gt_flag)
 
+    if terminal_print_flag:
+
+        print_pred_ci(val_image_path, json_python_pred, json_c_plusplus_pred,
+                       json_python_inference_time,
+                       json_c_plusplus_inference_time)
+
+        if terminal_print_gt_flag:
+            print_gt(val_image_path, coco_gt_infos)
+
+
+
     if log_prediction_flag:
         record_pred_ci(val_image_path, save_report_path, json_python_pred, json_c_plusplus_pred,
                        json_python_inference_time,
@@ -215,7 +236,6 @@ for idx, val_image_path in enumerate(val_image_paths):
             record_gt(val_image_path, save_report_path, coco_gt_infos)
 
     # extract the gt image coco info ...
-
     for _, json_py in enumerate(json_python_pred):
         coco_json_py.append({
             'image_id': coco_image_id,

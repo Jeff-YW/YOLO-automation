@@ -84,10 +84,28 @@ cmake --build .
 ```
 
 Windows
+Please be aware that windows have different compilers, please ensure that the compiled OpenCV package is consistent with
+the current compilers. For example, if OpenCV package is built with Visual Studio, so does the current folder. If the 
+OpenCV package is built with MinGW, careful that the current C++ project should built with it too!
+
+An example of using MinGW to build the current folder is:
+
+```
+rmdir /s /q build
+cmake -G "MinGW Makefiles" -S . -B build
+cmake --build build --config Release
+```
+
+The general build command lines can be:
 ```
 rmdir /s /q build
 cmake -S . -B build
 cmake --build build --config Release
+```
+
+Here is how to test whether the C++ project is running succesfully (please cd to the current working directory)
+```
+.\build\Med_TA.exe sample.jpg models\yolov5s.onnx
 ```
 
 If you want to run the C++ code, make sure you `cd` to the current working directory (not the build directory), and use the following command:

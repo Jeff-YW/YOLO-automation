@@ -4,7 +4,7 @@ import json
 import yaml
 import datetime
 from utils.vis_utils import display_image_cii
-from utils.log_utils import record_gt, record_pred_cii
+from utils.log_utils import record_gt, record_pred_cii, print_gt, print_pred_cii
 from utils.gen_utils import extract_id, read_text_file
 from pycocotools.coco import COCO
 from pycocotools.cocoeval import COCOeval
@@ -46,21 +46,22 @@ def coco_result_evaluation_cii():
         cocoEval = COCOeval(coco, cocoDt, 'bbox')
 
         # evaluate
+        print(f"Evaluated Model: {model_name}\n")
         cocoEval.evaluate()
         cocoEval.accumulate()
         cocoEval.summarize()
-        print(f"Evaluated Model: {model_name}\n")
         print(cocoEval.stats)
+        print(f"Average Inference Time ({model_name}): {sum(efficiency_models[model_name])/len(efficiency_models[model_name])}\n")
         print("\n\n")
 
         # save to report
         if log_prediction_flag:
             with open(save_report_path, 'a') as f:  # Use 'a' for append mode
                 f.write(f"Model Name: {model_name}\n")  # Write the model name
+                f.write(f"Average Inference Time ({model_name}): {sum(efficiency_models[model_name])/len(efficiency_models[model_name])}\n")
                 f.write("Stats:\n")
                 f.write(format_stats(cocoEval.stats))  # Write the stats
                 f.write("\n\n")  # Add a newline for separation between entries
-                f.write("\n")  # Add a newline for separation between entries
 
 
 # get the current working dir
@@ -90,6 +91,8 @@ vis_gt_flag = cii_params['vis_gt']
 log_prediction_flag = cii_params['log_pred']
 log_gt_flag = cii_params['log_gt']
 save_img_flag = cii_params["save_image"]
+terminal_print_flag = cii_params["terminal_pred"]
+terminal_print_gt_flag = cii_params["terminal_gt"]
 
 # Models, Runfiles, and Save file paths can also be extracted similarly
 print(f"number of YOLO models for evaluation: {len(cii_params['models'])}")
@@ -124,6 +127,7 @@ val_image_paths = read_text_file(val2017_text_path)  # load the paths to the pic
 
 # create a dict to save the predictions of models
 coco_json_models = {model['name']: [] for model in cii_params['models']}
+efficiency_models = {model['name']: [] for model in cii_params['models']}
 filtered_annotations = []
 
 for idx, val_image_path in enumerate(val_image_paths):
@@ -146,7 +150,7 @@ for idx, val_image_path in enumerate(val_image_paths):
     filtered_annotations.extend(anns)
 
     ######## PREPARE GT LOG #########
-    if create_vis_output_flag or log_gt_flag:
+    if create_vis_output_flag or log_gt_flag or terminal_print_flag:
 
         coco_gt_infos = []
 
@@ -181,6 +185,7 @@ for idx, val_image_path in enumerate(val_image_paths):
         # add to the temp dict ...
         json_detection_models[model_name] = json_python_pred
         json_inference_times[model_name] = json_python_inference_time['inference time']
+        efficiency_models[model_name].append(float(json_python_inference_time['inference time']))
 
         # inference_times.append(json_python_inference_time)
 
@@ -194,6 +199,15 @@ for idx, val_image_path in enumerate(val_image_paths):
                 'score': float(json_py['confidence']),
                 'area': float((json_py["box"][2]) * (json_py["box"][3]))
             })
+
+    ######## Terminal Printing #########
+    if terminal_print_flag:
+
+        print_pred_cii(val_image_path, json_detection_models,
+                      json_inference_times)
+
+        if terminal_print_gt_flag:
+            print_gt(val_image_path, coco_gt_infos)
 
     ######## VISUALIZING #########
     if create_vis_output_flag:
