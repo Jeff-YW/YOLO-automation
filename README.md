@@ -71,7 +71,36 @@ pip install -r requirements.txt
 
 ## Building C++ Files
 
-Instructions for building the C++ files with CMake will be provided here.
+C++ Files need to be built first! before carrying out the automation task and the directory name should be consistent as in the `things.yaml` so that the python automating script can find the correct file to run!
+
+Instructions for building the C++ files with CMake:
+
+Linux
+```
+mkdir build
+cd build
+cmake ..
+cmake --build .
+```
+
+Windows
+```
+rmdir /s /q build
+cmake -S . -B build
+cmake --build build --config Release
+```
+
+If you want to run the C++ code, make sure you `cd` to the current working directory (not the build directory), and use the following command:
+
+Linux
+```
+./build/Med_TA sample.jpg model/yolov5s.onnx
+```
+
+Windows
+```
+.\build\Release\Med_TA.exe sample.jpg model\yolov5s.onnx
+```
 
 ## Automate Task c(i)
 
