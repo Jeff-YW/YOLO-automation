@@ -47,17 +47,19 @@ cd [LOCAL_PATH_TO_THIS_REPO]
 
 ## Get COCO Datasets
 
-The dataset from the COCO 2017 Object Detection Task. The coco datasets needs to be downloaded in advance since the tasks rely on the dataset, it is for the best to download and unzip the dataset into the current working directory. If not, there is a way to link to the coco dataset by 
-changing the path to dataset. As shown below, by changing the two parameters will enable the python script to track down the images' locations locally.
+The coco datasets needs to be downloaded in advance since the tasks rely on the dataset, it is for the best to download and unzip the dataset into the current working directory.
+Here is the link to [val2017.zip](http://images.cocodataset.org/zips/val2017.zip) and [coco2017labels.zip](https://github.com/ultralytics/yolov5/releases/download/v1.0/coco2017labels.zip).
+The first unzipped validation images should be those validation images as in `./coco/images/val2017`, and the second file serves as the `./coco/` folder.
+
 
 ```YAML
 img_source_file: "coco/val2017.txt"
 ann_path:  "coco/annotations/instances_val2017.json"
 ```
 
-## Results
+## Result Saving
 
-The results are saved as text files within an automatically generated directory. Additionally, results are available in terminal print-out format and visualized prediction results (i.e., picture results).
+The results can be saved as text files within an automatically generated directory. Additionally, results are available in terminal print-out format and visualized prediction results (i.e., picture results).
 
 ## Configuration
 
@@ -100,18 +102,11 @@ C++ Files need to be built first! before carrying out the automation task and th
 
 Instructions for building the C++ files with CMake:
 
-Linux
-```
-mkdir build
-cd build
-cmake ..
-cmake --build .
-```
+Windows:
 
-Windows
-Please be aware that windows have different compilers, please ensure that the compiled OpenCV package is consistent with
-the current compilers. For example, if OpenCV package is built with Visual Studio, so does the current folder. If the 
-OpenCV package is built with MinGW, careful that the current C++ project should built with it too!
+Please be aware that Windows have different compilers. Ensure that the compiled OpenCV lib is consistent with
+the current compiler. For example, if OpenCV package is built with Visual Studio, shall the current folder be compiled with the same compiler. If the 
+OpenCV package is built with MinGW, careful that the current C++ project should be built with it too!
 
 An example of using MinGW to build the current folder is:
 
@@ -122,7 +117,7 @@ cmake --build build --config Release
 ```
 But if using MinGW, the .exe file directory needs to be changed
 
-The general build command lines can be:
+The general command lines for building the cpp projects can be:
 ```
 rmdir /s /q build
 cmake -S . -B build
