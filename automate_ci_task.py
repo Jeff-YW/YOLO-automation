@@ -156,6 +156,8 @@ filtered_annotations = []
 efficiency_py = []
 efficiency_cpp = []
 
+print("\n *********** Running Task c(i) *********** \n")
+
 for idx, val_image_path in enumerate(val_image_paths):
 
     if idx >= nums_of_pics:

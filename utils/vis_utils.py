@@ -127,10 +127,10 @@ def display_image_ci(image_path, save_path, p_detections, c_detections, gt_infos
     if save_image:
         cv2.imwrite(os.path.join(save_path, "infer-" + os.path.basename(image_path)), image)
 
-    # Display the image
-    cv2.imshow('Image', image)
-    cv2.waitKey(3000)  # Display the window for seconds
-    cv2.destroyAllWindows()
+    # # Display the image
+    # cv2.imshow('Image', image)
+    # cv2.waitKey(3000)  # Display the window for seconds
+    # cv2.destroyAllWindows()
 
 
 def display_image_cii(image_load_path, image_save_path, json_models, json_gts,
@@ -169,7 +169,7 @@ def display_image_cii(image_load_path, image_save_path, json_models, json_gts,
     if save_image:
         cv2.imwrite(os.path.join(image_save_path, "infer-" + os.path.basename(image_load_path)), image)
 
-    # Display the image
-    cv2.imshow('Image', image)
-    cv2.waitKey(3000)  # Display the window for seconds
-    cv2.destroyAllWindows()
+    # # Display the image
+    # cv2.imshow('Image', image)
+    # cv2.waitKey(3000)  # Display the window for seconds
+    # cv2.destroyAllWindows()

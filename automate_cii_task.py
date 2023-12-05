@@ -130,6 +130,8 @@ coco_json_models = {model['name']: [] for model in cii_params['models']}
 efficiency_models = {model['name']: [] for model in cii_params['models']}
 filtered_annotations = []
 
+print("\n *********** Running Task c(ii) *********** \n")
+
 for idx, val_image_path in enumerate(val_image_paths):
     if idx >= nums_of_pics:
         break

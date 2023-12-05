@@ -53,7 +53,19 @@ The YAML file (`things.yaml`) contains important parameters to control:
 - Enables switching between any of the three available YOLO models for task ci.
 - Allows the comparison of either two of the three models for object detection task performance evaluation in task cii.
 
-To enable print-out results and photo displayed results, make the necessary changes to the YAML file parameters.
+There are several parameters that control whether a print-out report or a text report or the visualizing images are saved or not.
+
+```yaml
+ci_task/cii_task:
+    vis_pred: True
+    vis_gt: True
+    log_pred: True
+    log_gt: True
+    terminal_pred: True
+    terminal_gt: True
+    save_image: True
+```
+By editing the YAML boolean flag, you would be able to control the display.
 
 ## Requirements
 The python packages required are:
@@ -95,6 +107,7 @@ rmdir /s /q build
 cmake -G "MinGW Makefiles" -S . -B build
 cmake --build build --config Release
 ```
+But if using MinGW, the .exe file directory needs to be changed
 
 The general build command lines can be:
 ```
@@ -103,17 +116,7 @@ cmake -S . -B build
 cmake --build build --config Release
 ```
 
-Here is how to test whether the C++ project is running succesfully (please cd to the current working directory)
-```
-.\build\Med_TA.exe sample.jpg models\yolov5s.onnx
-```
-
 If you want to run the C++ code, make sure you `cd` to the current working directory (not the build directory), and use the following command:
-
-Linux
-```
-./build/Med_TA sample.jpg model/yolov5s.onnx
-```
 
 Windows
 ```
