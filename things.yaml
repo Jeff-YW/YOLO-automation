@@ -2,6 +2,8 @@
 
 img_source_file: "coco/val2017.txt"
 
+img_folder: "coco/images/val2017"
+
 ann_path:  "coco/annotations/instances_val2017.json"
 
 ci_task:
@@ -24,8 +26,10 @@ ci_task:
 
   runfiles:
     python_path: "run_YOLO_model.py"
-#    cplusplus_path: "cmake-build-release/Med_TA.exe"
     cplusplus_path: "build/Release/Med_TA.exe"
+#    cplusplus_path: "cmake-build-debug/Med_TA.exe"
+#    cplusplus_path: "cmake-build-release/Med_TA.exe"
+
 
   report_name: "ci_report.txt"
 

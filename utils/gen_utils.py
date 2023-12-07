@@ -1,5 +1,14 @@
 import re
+import glob
 
+def data_loader(folder_path, nums_of_pic):
+    pattern = "*.jpg"
+
+    image_paths = sorted(glob.glob(f"{folder_path}/{pattern}"))
+
+
+    for image_path in image_paths:
+        yield image_path
 
 def read_text_file(txt_path):
     with open(txt_path, 'r') as file:
