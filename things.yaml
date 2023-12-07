@@ -27,6 +27,7 @@ ci_task:
   runfiles:
     python_path: "run_YOLO_model.py"
     cplusplus_path: "build/Release/Med_TA.exe"
+#    cplusplus_path: "build/Med_TA.exe"
 #    cplusplus_path: "cmake-build-debug/Med_TA.exe"
 #    cplusplus_path: "cmake-build-release/Med_TA.exe"
 
