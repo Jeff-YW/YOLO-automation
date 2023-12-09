@@ -35,9 +35,9 @@ jobs:
 
     - name: Setup directories and download datasets
       run: |
+        mkdir -p coco/images/val2017
         wget https://github.com/ultralytics/yolov5/releases/download/v1.0/coco2017labels.zip
-        unzip -q coco2017labels.zip -d coco
-        mkdir -p coco/images
+        unzip -q coco2017labels.zip -d .
         wget http://images.cocodataset.org/zips/val2017.zip
         unzip -q val2017.zip -d coco/images
     - name: List directory structure
