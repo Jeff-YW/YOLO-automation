@@ -40,6 +40,12 @@ jobs:
         mkdir -p coco/images
         wget http://images.cocodataset.org/zips/val2017.zip
         unzip -q val2017.zip -d coco/images
+    - name: List directory structure
+      run: |
+        ls -R
+    - name: List COCO dataset directory structure
+      run: |
+        ls -l coco
     - name: Test the script
       run: |
         python automate_cii_task.py # run the test script
