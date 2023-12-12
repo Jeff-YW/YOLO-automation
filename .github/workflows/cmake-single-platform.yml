@@ -46,9 +46,9 @@ jobs:
       run: ls -R
 
     - name: Run Med_TA program with arguments
-      working-directory: ${{github.workspace}}/build
+      working-directory: ${{github.workspace}}
       run: |
-        ./Med_TA coco/images/val2017 models/yolov5s.onxx 20
+        ./build/Med_TA coco/images/val2017 models/yolov5s.onxx 20
 
     
 
