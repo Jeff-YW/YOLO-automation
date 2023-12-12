@@ -25,6 +25,14 @@ jobs:
     - name: Install OpenCV
       run: sudo apt-get install -y libopencv-dev
 
+    - name: Setup directories and download datasets
+      run: |
+        mkdir -p coco/images/val2017
+        wget https://github.com/ultralytics/yolov5/releases/download/v1.0/coco2017labels.zip
+        unzip -q coco2017labels.zip -d .
+        wget http://images.cocodataset.org/zips/val2017.zip
+        unzip -q val2017.zip -d coco/images
+
     - name: Configure CMake
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
       # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
@@ -36,6 +44,12 @@ jobs:
 
     - name: Check folders
       run: ls -R
+
+    - name: Run Med_TA program with arguments
+      working-directory: ${{github.workspace}}/build
+      run: |
+        cd build
+        ./Med_TA coco/images/val2017 models/yolov5s.onxx 20
 
     
 
