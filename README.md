@@ -1,8 +1,14 @@
+# YOLO-Automation: A YOLO Model Evaluation Suite
 
-# YOLO-automation
+Welcome to the YOLO Object Detection Model Automated Inference and Evaluation repo, a comprehensive suite of tools and scripts dedicated to the evaluation and benchmarking of YOLO object detection models. This toolkit is crafted for developers, researchers, and enthusiasts aiming to explore the nuances of model performance, specifically focusing on the YOLO architecture. Whether you're comparing the intricacies of C++ and Python implementations or evaluating different YOLO model versions, this toolkit provides an automated, user-friendly approach to assessing object detection capabilities by comparing the performance and inference time of different YOLO models.
 
-This repository contains tools and scripts for automating the comparison of different aspects of `YOLO` implementations and models. 
-It is designed to facilitate the evaluation of `C++` and `Python`` implementation equivalence and to compare the performance and inference time of different YOLO models.
+## Features
+
+- **Cross-Language Implementation Comparison**: Seamlessly compare the output equivalence of YOLO models between C++ and Python implementations. This feature is designed to ensure consistency and reliability across different development environments.
+
+- **Model Performance Benchmarking**: Dive into the performance metrics of various YOLO models, including YOLO5s, YOLOv5n and YOLOv5m. Our toolkit facilitates an in-depth comparison of detection performance and inference speed, providing insights into the most efficient and accurate models for your object detection needs.
+
+# Getting Started
 
 ## Sample Run Result
 
@@ -131,22 +137,22 @@ Windows
 .\build\Release\Med_TA.exe sample.jpg model\yolov5s.onnx
 ```
 
-## Automate Task c(i)
+### Evaluating Implementation Equivalence
 
-Simply run
+To compare the equivalence of YOLO outputs between C++ and Python, ensuring that your development environment can handle both programming languages with the necessary dependencies. Then, execute the following command:
 
-```
-python automate_ci_task.py
-```
-
-## Automate Task c(ii)
-
-Simply run
-
-```
-python automate_cii_task.py
+```bash
+python automate_task_i.py
 ```
 
-## Acknowledgments
+This script automates the comparison process, providing a detailed report on the equivalence of the outputs post-Non-Max Suppression (NMS), a crucial step for accurate object detection.
 
-Thanks for this opportunity to demonstrate my understanding and skills! Through completing this challange, I have had the opportunity to appreciate the hands-on tasks at your group and overall I enjoy working on it. Looking forward to receiving further notice! 
+### Benchmarking Model Performance
+
+For a comprehensive evaluation of YOLO models, focusing on the lightweight YOLOv5n and the more robust YOLOv5m, use the following command:
+
+```bash
+python automate_task_ii.py
+```
+
+This script compares the two models across various metrics, including detection accuracy, precision, recall, and inference time, offering valuable insights into the trade-offs between model complexity and performance.
