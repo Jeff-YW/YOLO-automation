@@ -52,5 +52,5 @@ jobs:
         ls -l coco
     - name: Test the script
       run: |
-        python automate_cii_task.py # run the test script
+        python automate_task_ii.py # run the test script
 
